@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AppRpgEtec.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AppRpgEtec">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FrameOptions" TargetType="Frame">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout Padding="30,0" Spacing="25">
+                <Image Source="dotnet_bot.png" HeightRequest="185" Aspect="AspectFit" />
+
+                <Label Text="Hello, World!" FontSize="24" FontAttributes="Bold" />
+                <Label Text="Welcome to .NET Multi-platform App UI" FontSize="18" />
+
+                <Button x:Name="CounterBtn" Text="Click me" Clicked="OnCounterClicked" HorizontalOptions="Fill" />
+
+                <!-- Frame com imagem e botão VER -->
+                <Frame BackgroundColor="LightGray" HeightRequest="190" Padding="0" HasShadow="false" CornerRadius="10">
+                    <Grid>
+                        <Image Source="dotnet_bot.svg"/>
+                        <FlexLayout Direction="Row" Margin="20" AlignItems="Stretch">
+                            <Label Text="RPG App" FlexLayout.Grow="1" FontAttributes="Bold" FontSize="20" VerticalTextAlignment="Center"/>
+                            <FlexLayout FlexLayout.Grow="2" Direction="Column" AlignItems="End" JustifyContent="Center">
+                                <Label Text="Usuários" FontSize="20"/>
+                                <Button Text="VER"/>
+                            </FlexLayout>
+                        </FlexLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Recursos -->
+                <Label Text="Este App oferece recursos para" FontAttributes="Bold" FontSize="Medium"/>
+                <ScrollView Orientation="Horizontal">
+                    <HorizontalStackLayout>
+                        <!-- Cards -->
+                        <Frame Style="{StaticResource FrameOptions}" Padding="0" HeightRequest="150" WidthRequest="120">
+                            <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                <Image Source="menupersonagens.svg"/>
+                                <Label Text="Personagens" FontSize="Small" HorizontalTextAlignment="Center" Margin="10,0"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Style="{StaticResource FrameOptions}" Padding="0" HeightRequest="150" WidthRequest="120">
+                            <VerticalStackLayout Spacing="30" VerticalOptions="Center">
+                                <Image Source="menuarmas.png"/>
+                                <Label Text="Armas" FontSize="Small" HorizontalTextAlignment="Center" Margin="10,0"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Style="{StaticResource FrameOptions}" Padding="0" HeightRequest="150" WidthRequest="120">
+                            <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                <Image Source="menudisputas.png"/>
+                                <Label Text="Disputas" FontSize="Small" HorizontalTextAlignment="Center" Margin="10,0"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <HorizontalStackLayout Margin="10,100">
+                    <Image Source="exit.svg" WidthRequest="50"/>
+                    <Label Text="Sair" Margin="10,0,0,0" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+
+    
+    
