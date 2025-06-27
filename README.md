@@ -22,7 +22,7 @@ Este é um aplicativo de lutas estilo RPG desenvolvido com **.NET MAUI**, com fu
 
 | Tela de Disputas |
 |------------------|
-| ![Screenshot](./Assets/disputa_view.png) |
+| ![Screenshot](AppRpgEtec/Assets/disputa_view.png) |
 
 > Imagem real do app em execução
 
