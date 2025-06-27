@@ -8,7 +8,7 @@ namespace AppRpgEtec.Services.Disputas
         private string _token;
 
         // 🔑 Sua URL base — ajuste para sua API real
-        private const string _apiUrlBase = "https://xyz/Disputas";
+        private const string _apiUrlBase = "http://10.0.2.2:5243/api/Disputas";
 
         public DisputaService(string token)
         {

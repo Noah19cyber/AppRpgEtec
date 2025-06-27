@@ -110,7 +110,7 @@ namespace AppRpgEtec.ViewModels.DisputaNamespace
                 Disputas.Add(disputa);
         }
 
-        private async Task PesquisarPersonagens(string nome)
+        public async Task PesquisarPersonagens(string nome)
         {
             PersonagensEncontrados.Clear();
             var resultado = await pService.PesquisarPorNomeAsync(nome);
@@ -186,6 +186,13 @@ namespace AppRpgEtec.ViewModels.DisputaNamespace
             {
                 await Shell.Current.DisplayAlert("Ops", ex.Message, "Ok");
             }
+        }
+
+        // ✅ Adicionado: carrega dados ao abrir a tela
+        public async void OnViewAppearing()
+        {
+            await ObterDisputas();
+            await PesquisarPersonagens("");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

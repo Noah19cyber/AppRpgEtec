@@ -2,85 +2,80 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:conv="clr-namespace:AppRpgEtec.Converters"
+             xmlns:viewmodels="clr-namespace:AppRpgEtec.ViewModels.DisputaNamespace"
              x:Class="AppRpgEtec.Views.Disputas.ListagemDisputaView"
-             Title="ListagemDisputaView">
+             Title="Disputas">
 
-    <!-- ✅ REGISTRO DOS CONVERTERS -->
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:PontosVidaConverter x:Key="PontosVidaConverter" />
-            
+            <conv:PontosVidaConverter x:Key="PontosVidaColorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <!-- ✅ BARRA DE TÍTULO -->
-    <Shell.TitleView>
-        <Button Command="{Binding NovoPersonagemCommand}"
-                Text="Novo"
-                HorizontalOptions="FillAndExpand"/>
-    </Shell.TitleView>
+    <ContentPage.BindingContext>
+        <viewmodels:DisputaViewModel />
+    </ContentPage.BindingContext>
 
-    <!-- ✅ CONTEÚDO PRINCIPAL -->
     <ScrollView>
-        <VerticalStackLayout Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
+        <VerticalStackLayout Padding="20" Spacing="16">
 
-            <Button Text="Zerar Ranking Geral"
-                    Command="{Binding ZerarRankingRestaurarVidasGeralCommand}"
-                    FontAttributes="Bold"
-                    VerticalOptions="FillAndExpand"/>
+            <!-- 🔹 Botões opcionais -->
+            <!--<Button Text="Novo" Command="{Binding NovoPersonagemCommand}" BackgroundColor="#6200EE" TextColor="White" />
+            <Button Text="Zerar Ranking Geral" Command="{Binding ZerarRankingRestaurarVidasGeralCommand}" BackgroundColor="#6200EE" TextColor="White" />-->
 
-            <ListView x:Name="listView"
-                      HasUnevenRows="True"
-                      ItemsSource="{Binding Personagens}"
-                      SelectedItem="{Binding PersonagemSelecionado}">
-                <ListView.ItemTemplate>
+            <!-- 🔹 Buscar personagens -->
+            <Label Text="Buscar Personagens" FontAttributes="Bold"/>
+            <SearchBar x:Name="search"
+                       Placeholder="Nome do personagem"
+                       SearchButtonPressed="OnSearchPressed" />
+
+            <!-- 🔹 Lista para seleção -->
+            <CollectionView ItemsSource="{Binding PersonagensEncontrados}" 
+                            SelectionMode="Single" 
+                            SelectionChanged="OnPersonagemSelecionado"
+                            HeightRequest="150">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <!-- ✅ AÇÃO DE CONTEXTO PARA REMOVER -->
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Remover"
-                                          IsDestructive="True"
-                                          Command="{Binding Path=BindingContext.RemoverPersonagemCommand, Source={x:Reference listView}}"
-                                          CommandParameter="{Binding .}" />
-                            </ViewCell.ContextActions>
-
-                            <!-- ✅ LAYOUT DE CADA ITEM -->
-                            <Grid Padding="15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- ✅ COR COM CONVERTER -->
-                                <BoxView Grid.RowSpan="2"
-                                         HeightRequest="50"
-                                         WidthRequest="20"
-                                         Color="{Binding PontosVida, Converter={StaticResource PontosVidaColorConverter}}"/>
-
-                                <!-- ✅ NOME -->
-                                <Label Grid.Row="0"
-                                       Grid.Column="1"
-                                       Text="{Binding Nome}"
-                                       FontSize="18"
-                                       FontAttributes="Bold"/>
-
-                                <!-- ✅ PONTOS DE VIDA FORMATADOS COM CONVERTER -->
-                                <Label Grid.Row="1"
-                                       Grid.Column="1"
-                                       Text="{Binding PontosVida, Converter={StaticResource PontosVidaConverter}}"
-                                       FontSize="14"/>
-                            </Grid>
-
-                        </ViewCell>
+                        <Grid Padding="10" ColumnDefinitions="20,*,Auto">
+                            <BoxView Color="{Binding PontosVida, Converter={StaticResource PontosVidaColorConverter}}" />
+                            <Label Grid.Column="1" Text="{Binding Nome}" FontAttributes="Bold"/>
+                            <Label Grid.Column="2" Text="{Binding PontosVida, Converter={StaticResource PontosVidaConverter}}" />
+                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- 🔹 Selecionados -->
+            <Label Text="Atacante:" FontAttributes="Bold" />
+            <Label Text="{Binding DescricaoPersonagemAtacante}" />
+
+            <Label Text="Oponente:" FontAttributes="Bold" />
+            <Label Text="{Binding DescricaoPersonagemOponente}" />
+
+            <!-- 🔹 Habilidade -->
+            <Label Text="Habilidades do Atacante:" FontAttributes="Bold"/>
+            <Picker ItemsSource="{Binding Habilidades}" 
+                    ItemDisplayBinding="{Binding Habilidade.Nome}" 
+                    SelectedItem="{Binding HabilidadeSelecionada}" />
+
+            <!-- 🔹 Botões de disputa -->
+            <Button Text="Disputa com Arma" Command="{Binding DisputaComArmaCommand}" BackgroundColor="DarkRed" TextColor="White"/>
+            <Button Text="Disputa com Habilidade" Command="{Binding DisputaComHabilidadeCommand}" BackgroundColor="DarkBlue" TextColor="White"/>
+            <Button Text="Disputa Geral" Command="{Binding DisputaGeralCommand}" BackgroundColor="DarkGreen" TextColor="White"/>
+
+            <!-- 🔹 Histórico -->
+            <Label Text="Histórico de Disputas" FontAttributes="Bold"/>
+            <CollectionView ItemsSource="{Binding Disputas}" HeightRequest="200">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" Padding="10" Margin="5">
+                            <Label Text="{Binding Narracao}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
