@@ -3,7 +3,7 @@
 Este é um aplicativo de lutas estilo RPG desenvolvido com **.NET MAUI**, com funcionalidades de combate entre personagens usando **armas**, **habilidades** ou **disputas gerais em grupo**.
 
 ### 👩‍💻 Desenvolvido por:
-**Aline Borges Cunha**
+**Aline Borges Cunha e Leandro Augusto**
 
 ---
 
